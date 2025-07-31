@@ -1,1 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Keystroke Logger Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-bottom: 10px;
+    }
+    #logBox {
+      border: 1px solid #ccc;
+      padding: 10px;
+      min-height: 50px;
+      margin-bottom: 10px;
+      white-space: pre-wrap;
+      background-color: #f9f9f9;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Keystroke Logger Demo</h1>
+  <p>Start typing in the text area. Keys will be logged below:</p>
+
+  <textarea id="typingArea" placeholder="Type here..."></textarea>
+
+  <h3>Logged Keystrokes:</h3>
+  <div id="logBox"></div>
+
+  <button onclick="downloadLog()">Download Log</button>
+
+  <script>
+    let keystrokeLog = [];
+
+    document.addEventListener("keydown", function(event) {
+      const key = event.key;
+
+      // Store key
+      keystrokeLog.push(key);
+
+      // Show key in the logBox
+      const logBox = document.getElementById("logBox");
+      logBox.textContent += key + " ";
+    });
+
+    function downloadLog() {
+      const blob = new Blob([keystrokeLog.join(" ")], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "keystroke_log.txt";
+      a.click();
+
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
 # SCT
